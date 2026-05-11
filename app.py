@@ -80,7 +80,7 @@ HEALTHY_ALTERNATIVES = [
 
 @st.cache_resource
 def get_ocr_reader():
-    # Explicitly configure gpu=False for Streamlit Cloud CPU setup to avoid driver timeouts
+    # Explicitly configure gpu=False for CPU cloud setup
     return easyocr.Reader(['bg', 'en'], gpu=False)
 
 def preprocess_ocr_text(raw_text):
@@ -181,6 +181,15 @@ def main():
     st.write("Extract text from food labels using EasyOCR and immediately detect hidden harmful ingredients, additives, and allergens.")
     st.markdown("---")
     
+    # -------------------------------------------------------------------------
+    # CRITICAL CLOUD OPTIMIZATION:
+    # Initialize and cache the OCR reader upfront when the web page boots up.
+    # This securely downloads the heavy models upfront, preventing memory 
+    # spikes and status check timeouts during actual button execution.
+    # -------------------------------------------------------------------------
+    with st.spinner("⏳ Pre-loading AI models into memory (First load takes 1-2 minutes)..."):
+        reader = get_ocr_reader()
+        
     tab_file, tab_cam = st.tabs(["📂 Upload File", "📷 Take Photo"])
     raw_image = None
     
@@ -188,7 +197,6 @@ def main():
         file_buffer = st.file_uploader("Upload a label image (JPG, PNG):", type=["jpg", "jpeg", "png"])
         if file_buffer:
             raw_image = Image.open(file_buffer)
-            # Replaced removed 'use_container_width' with modern 'width="stretch"'
             st.image(raw_image, caption="Uploaded Label Image", width="stretch")
             
     with tab_cam:
@@ -199,13 +207,13 @@ def main():
             
     if raw_image and st.button("🔍 Analyze Label", type="primary"):
         
-        with st.status("Initializing AI components...", expanded=True) as status:
+        with st.status("Processing label data...", expanded=True) as status:
             
             st.write("📷 Loading image data into memory...")
             img_array = np.array(raw_image.convert("RGB"))
             
-            st.write("⏳ Extracting raw text via EasyOCR neural network (Downloading models if initial run)...")
-            reader = get_ocr_reader()
+            st.write("⏳ Extracting raw text via EasyOCR neural network...")
+            # Reader is already safely loaded upfront, making this step fast and stable
             text_segments = reader.readtext(img_array, detail=0)
             full_extracted_text = " ".join(text_segments)
             
