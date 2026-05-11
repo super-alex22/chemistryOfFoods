@@ -1,4 +1,5 @@
 import re
+import time
 import streamlit as st
 import easyocr
 import numpy as np
@@ -83,25 +84,14 @@ def get_ocr_reader():
     return easyocr.Reader(['bg', 'en'])
 
 def preprocess_ocr_text(raw_text):
-    """
-    Cleans up noisy OCR text by removing artifacts and fixing common 
-    character misreads (e.g. replacing brackets inside words).
-    """
     text = raw_text.replace("^", "л").replace("0", "о")
-    # Fix specific OCR split/bracket errors observed in real scans
     text = text.replace("а(корбинова", "аскорбинова")
     text = text.replace("кез", "без")
     return text
 
 def has_global_negation(text, keyword_type=""):
-    """
-    Performs a robust global check across the text for negated claims.
-    Effectively handles OCR merged strings like 'гзпественакконСерванти'.
-    """
-    # If looking for preservatives, check if the label explicitly claims "no preservatives"
     if keyword_type == "preservative":
         negations = ["без изкуствени", "без консерванти", "no preservatives", "free from preservatives"]
-        # Also check if 'без' appears anywhere near the word
         if "без" in text.lower() or "free" in text.lower():
             return True
         for neg in negations:
@@ -114,7 +104,6 @@ def scan_for_e_numbers(text):
     cleaned_text = preprocess_ocr_text(text)
     padded_text = f" {cleaned_text} "
     
-    # 1. Scan explicit E-numbers
     for digits, (name, desc) in E_ADDITIVES.items():
         patterns = [
             f"E{digits}", f"Е{digits}",
@@ -126,7 +115,6 @@ def scan_for_e_numbers(text):
                 found[digits] = (name, desc)
                 break
                     
-    # 2. Scan hidden chemical names mapped directly to E-codes
     for kw, digits in HIDDEN_E_CODES.items():
         if re.search(re.escape(kw), padded_text, re.IGNORECASE):
             name, desc = E_ADDITIVES[digits]
@@ -141,9 +129,8 @@ def scan_for_keywords(text):
     
     for kw, (name, desc) in KEYWORDS_DATA.items():
         if kw in cleaned_text:
-            # Apply robust negation filter specifically for preservatives
             if name == "Preservatives" and has_global_negation(cleaned_text, keyword_type="preservative"):
-                continue  # Skip trigger if negated
+                continue  
             found[name] = desc
             
     return found
@@ -210,19 +197,36 @@ def main():
             st.image(raw_image, caption="Captured Label Image", use_container_width=True)
             
     if raw_image and st.button("🔍 Analyze Label", type="primary"):
-        with st.spinner("⏳ Extracting text and analyzing ingredients..."):
+        
+        # Multi-step progress animation with a spinning circle
+        with st.status("Initializing AI components...", expanded=True) as status:
+            
+            st.write("📷 Loading image data into memory...")
+            time.sleep(0.6)  # Adding a slight delay for a satisfying visual flow
+            
+            st.write("⏳ Extracting raw text via EasyOCR neural network...")
             reader = get_ocr_reader()
             img_array = np.array(raw_image.convert("RGB"))
-            
             text_segments = reader.readtext(img_array, detail=0)
             full_extracted_text = " ".join(text_segments)
             
+            st.write("⚙️ Preprocessing and filtering OCR noise...")
+            time.sleep(0.5)
+            # Preprocessing happens internally here
+            
+            st.write("🔬 Scanning for direct E-codes and hidden chemical names...")
+            time.sleep(0.6)
+            detected_e = scan_for_e_numbers(full_extracted_text)
+            
+            st.write("⚠️ Cross-referencing hazardous additives and allergen keywords...")
+            time.sleep(0.6)
+            detected_kw = scan_for_keywords(full_extracted_text)
+            
+            status.update(label="Analysis Complete!", state="complete", expanded=False)
+            
+        # Displaying results below after the animation finishes
         st.subheader("📜 Extracted Text from Label:")
         st.info(full_extracted_text if full_extracted_text.strip() else "No readable text detected.")
-        
-        # Run scanners with the built-in OCR noise preprocessor
-        detected_e = scan_for_e_numbers(full_extracted_text)
-        detected_kw = scan_for_keywords(full_extracted_text)
         
         st.subheader("⚠️ Detected Harmful Ingredients (E-codes):")
         if detected_e:
