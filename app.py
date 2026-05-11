@@ -80,7 +80,8 @@ HEALTHY_ALTERNATIVES = [
 
 @st.cache_resource
 def get_ocr_reader():
-    return easyocr.Reader(['bg', 'en'])
+    # Explicitly configure gpu=False for Streamlit Cloud CPU setup to avoid driver timeouts
+    return easyocr.Reader(['bg', 'en'], gpu=False)
 
 def preprocess_ocr_text(raw_text):
     text = raw_text.replace("^", "л").replace("0", "о")
@@ -187,29 +188,28 @@ def main():
         file_buffer = st.file_uploader("Upload a label image (JPG, PNG):", type=["jpg", "jpeg", "png"])
         if file_buffer:
             raw_image = Image.open(file_buffer)
-            st.image(raw_image, caption="Uploaded Label Image", use_container_width=True)
+            # Replaced removed 'use_container_width' with modern 'width="stretch"'
+            st.image(raw_image, caption="Uploaded Label Image", width="stretch")
             
     with tab_cam:
         cam_buffer = st.camera_input("Take a clear picture of the ingredient list:")
         if cam_buffer:
             raw_image = Image.open(cam_buffer)
-            st.image(raw_image, caption="Captured Label Image", use_container_width=True)
+            st.image(raw_image, caption="Captured Label Image", width="stretch")
             
     if raw_image and st.button("🔍 Analyze Label", type="primary"):
         
-        # Real-time status animation without sleep delays to prevent Cloud timeouts
         with st.status("Initializing AI components...", expanded=True) as status:
             
             st.write("📷 Loading image data into memory...")
             img_array = np.array(raw_image.convert("RGB"))
             
-            st.write("⏳ Extracting raw text via EasyOCR neural network...")
+            st.write("⏳ Extracting raw text via EasyOCR neural network (Downloading models if initial run)...")
             reader = get_ocr_reader()
             text_segments = reader.readtext(img_array, detail=0)
             full_extracted_text = " ".join(text_segments)
             
             st.write("⚙️ Preprocessing and filtering OCR noise...")
-            # Instant memory operations
             
             st.write("🔬 Scanning for direct E-codes and hidden chemical names...")
             detected_e = scan_for_e_numbers(full_extracted_text)
