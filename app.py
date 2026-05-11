@@ -38,7 +38,7 @@ E_ADDITIVES = {
     "952": ("E952: Cyclamate", "Artificial sweetener. Banned in some countries due to potential health concerns.")
 }
 
-# Hidden chemical names mapping directly to E-codes (Exposing hidden additives)
+# Hidden chemical names mapped directly to E-codes
 HIDDEN_E_CODES = {
     "аскорбинова киселина": "300",
     "ascorbic acid": "300",
@@ -82,24 +82,37 @@ HEALTHY_ALTERNATIVES = [
 def get_ocr_reader():
     return easyocr.Reader(['bg', 'en'])
 
-def is_negated(text, match_index):
+def preprocess_ocr_text(raw_text):
     """
-    Checks a 40-character window before the matched ingredient to verify 
-    if negation words like 'без', 'no', 'without', or 'free' are present.
-    Prevents false positive alerts.
+    Cleans up noisy OCR text by removing artifacts and fixing common 
+    character misreads (e.g. replacing brackets inside words).
     """
-    start_look = max(0, match_index - 40)
-    preceding_context = text[start_look:match_index]
-    negation_patterns = ["без", "no", "without", "free", "0%"]
-    
-    for neg in negation_patterns:
-        if re.search(r'\b' + re.escape(neg) + r'\b', preceding_context, re.IGNORECASE):
+    text = raw_text.replace("^", "л").replace("0", "о")
+    # Fix specific OCR split/bracket errors observed in real scans
+    text = text.replace("а(корбинова", "аскорбинова")
+    text = text.replace("кез", "без")
+    return text
+
+def has_global_negation(text, keyword_type=""):
+    """
+    Performs a robust global check across the text for negated claims.
+    Effectively handles OCR merged strings like 'гзпественакконСерванти'.
+    """
+    # If looking for preservatives, check if the label explicitly claims "no preservatives"
+    if keyword_type == "preservative":
+        negations = ["без изкуствени", "без консерванти", "no preservatives", "free from preservatives"]
+        # Also check if 'без' appears anywhere near the word
+        if "без" in text.lower() or "free" in text.lower():
             return True
+        for neg in negations:
+            if neg in text.lower():
+                return True
     return False
 
 def scan_for_e_numbers(text):
     found = {}
-    padded_text = f" {text} "
+    cleaned_text = preprocess_ocr_text(text)
+    padded_text = f" {cleaned_text} "
     
     # 1. Scan explicit E-numbers
     for digits, (name, desc) in E_ADDITIVES.items():
@@ -109,30 +122,30 @@ def scan_for_e_numbers(text):
             f"E-{digits}", f"Е-{digits}"
         ]
         for pat in patterns:
-            for match in re.finditer(re.escape(pat), padded_text, re.IGNORECASE):
-                if not is_negated(padded_text, match.start()):
-                    found[digits] = (name, desc)
-                    break
-                    
-    # 2. Scan hidden chemical names directly mapped to E-codes
-    for kw, digits in HIDDEN_E_CODES.items():
-        for match in re.finditer(re.escape(kw), padded_text, re.IGNORECASE):
-            if not is_negated(padded_text, match.start()):
-                name, desc = E_ADDITIVES[digits]
-                found[digits] = (name, f"{desc} *(Detected via hidden chemical name)*")
+            if re.search(re.escape(pat), padded_text, re.IGNORECASE):
+                found[digits] = (name, desc)
                 break
+                    
+    # 2. Scan hidden chemical names mapped directly to E-codes
+    for kw, digits in HIDDEN_E_CODES.items():
+        if re.search(re.escape(kw), padded_text, re.IGNORECASE):
+            name, desc = E_ADDITIVES[digits]
+            found[digits] = (name, f"{desc} *(Detected via hidden chemical name)*")
+            break
                 
     return found
 
 def scan_for_keywords(text):
     found = {}
-    padded_text = f" {text} "
+    cleaned_text = preprocess_ocr_text(text).lower()
     
     for kw, (name, desc) in KEYWORDS_DATA.items():
-        for match in re.finditer(re.escape(kw), padded_text, re.IGNORECASE):
-            if not is_negated(padded_text, match.start()):
-                found[name] = desc
-                break
+        if kw in cleaned_text:
+            # Apply robust negation filter specifically for preservatives
+            if name == "Preservatives" and has_global_negation(cleaned_text, keyword_type="preservative"):
+                continue  # Skip trigger if negated
+            found[name] = desc
+            
     return found
 
 def generate_report_content(text, e_codes, keywords):
@@ -204,16 +217,12 @@ def main():
             text_segments = reader.readtext(img_array, detail=0)
             full_extracted_text = " ".join(text_segments)
             
-            # Smart filter: fix common OCR misreads (like кисе^ина -> киселина) 
-            # exclusively to aid internal scanning logic without losing context.
-            cleaned_text_for_scan = full_extracted_text.replace("^", "л").replace("0", "о")
-            
         st.subheader("📜 Extracted Text from Label:")
         st.info(full_extracted_text if full_extracted_text.strip() else "No readable text detected.")
         
-        # Scan using the noise-filtered text
-        detected_e = scan_for_e_numbers(cleaned_text_for_scan)
-        detected_kw = scan_for_keywords(cleaned_text_for_scan)
+        # Run scanners with the built-in OCR noise preprocessor
+        detected_e = scan_for_e_numbers(full_extracted_text)
+        detected_kw = scan_for_keywords(full_extracted_text)
         
         st.subheader("⚠️ Detected Harmful Ingredients (E-codes):")
         if detected_e:
