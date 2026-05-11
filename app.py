@@ -1,5 +1,4 @@
 import re
-import time
 import streamlit as st
 import easyocr
 import numpy as np
@@ -198,33 +197,28 @@ def main():
             
     if raw_image and st.button("🔍 Analyze Label", type="primary"):
         
-        # Multi-step progress animation with a spinning circle
+        # Real-time status animation without sleep delays to prevent Cloud timeouts
         with st.status("Initializing AI components...", expanded=True) as status:
             
             st.write("📷 Loading image data into memory...")
-            time.sleep(0.6)  # Adding a slight delay for a satisfying visual flow
+            img_array = np.array(raw_image.convert("RGB"))
             
             st.write("⏳ Extracting raw text via EasyOCR neural network...")
             reader = get_ocr_reader()
-            img_array = np.array(raw_image.convert("RGB"))
             text_segments = reader.readtext(img_array, detail=0)
             full_extracted_text = " ".join(text_segments)
             
             st.write("⚙️ Preprocessing and filtering OCR noise...")
-            time.sleep(0.5)
-            # Preprocessing happens internally here
+            # Instant memory operations
             
             st.write("🔬 Scanning for direct E-codes and hidden chemical names...")
-            time.sleep(0.6)
             detected_e = scan_for_e_numbers(full_extracted_text)
             
             st.write("⚠️ Cross-referencing hazardous additives and allergen keywords...")
-            time.sleep(0.6)
             detected_kw = scan_for_keywords(full_extracted_text)
             
             status.update(label="Analysis Complete!", state="complete", expanded=False)
             
-        # Displaying results below after the animation finishes
         st.subheader("📜 Extracted Text from Label:")
         st.info(full_extracted_text if full_extracted_text.strip() else "No readable text detected.")
         
