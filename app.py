@@ -196,7 +196,7 @@ def show_terms_popup():
                 line-height: 1.55;
             ">
             
-Disclaimer
+<h2>Disclaimer</h2>
 
 This application, including its source code, user interface, internal logic, text content, structure, design decisions, databases, ingredient lists, keyword lists, reports, and all related project materials, is created for educational and demonstration purposes only.
 
@@ -304,9 +304,9 @@ If you do not fully accept these Terms and Conditions, you must immediately stop
             unsafe_allow_html=True
         )
 
-        accepted = st.checkbox("accepted = st.checkbox(
-    "I confirm that I am at least 18 years old, have full legal and mental capacity to accept these Terms and Conditions, and have read, understood, and fully accepted all limitations of liability, intellectual property restrictions, age restrictions, supervision requirements, and possible legal consequences for unauthorized use, false information, or misuse of this application."
-)")
+        accepted = st.checkbox(
+    "I confirm that I am at least 18 years old, have full legal and mental capacity to accept these Terms and Conditions, and have read, understood, and fully accepted all liability limitations, intellectual property restrictions, age restrictions, supervision requirements, privacy warnings, prohibited content rules, and possible legal consequences for unauthorized use, false information, illegal content, adult content, or misuse of this application."
+)
 
         if st.button("Continue", type="primary", disabled=not accepted):
             st.session_state.terms_accepted = True
