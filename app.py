@@ -198,31 +198,33 @@ def show_terms_popup():
             
              Disclaimer
 
-            This application is created for educational and demonstration purposes only.
+            This application, including its source code, user interface, internal logic, text content, structure, design decisions, databases, ingredient lists, keyword lists, reports, and all related project materials, is created for educational and demonstration purposes only.
 
-AI Food Label Analyzer uses OCR text recognition and a predefined list of ingredients, E-numbers, chemical names, and keywords. The analysis is generated automatically and may contain mistakes, especially if the photo is unclear, incomplete, blurry, dark, cropped, distorted, or incorrectly recognized by the OCR model.
+AI Food Label Analyzer is not a certified, approved, official, medical, nutritional, allergy-related, legal, regulatory, or food safety tool. It is an experimental school project. It must not be treated as a professional system, official source, medical device, diagnostic tool, legal instrument, food safety authority, or certified product evaluation service.
 
-This application is not a fully certified medical, nutritional, legal, or food safety tool. It is a school project and should be treated as an experimental educational application. The results are informative only and must not be considered professional advice.
+The application uses OCR text recognition and a predefined list of ingredients, E-numbers, chemical names, and keywords. The analysis is generated automatically and may contain errors, omissions, distortions, false positives, false negatives, incomplete results, outdated information, or incorrect interpretations. Such errors may be caused by blurry photos, unclear labels, poor lighting, cropped images, damaged packaging, unusual fonts, OCR limitations, spelling differences, language differences, technical limitations, or limitations of the predefined database.
 
-The author does not guarantee the accuracy, clarity, completeness, truthfulness, objectivity, reliability, or relevance of any information generated or displayed by this application. The information may be incomplete, outdated, incorrectly interpreted, or technically inaccurate.
+The author does not guarantee, under any circumstances, the accuracy, completeness, clarity, truthfulness, objectivity, reliability, legality, relevance, timeliness, medical correctness, nutritional correctness, or practical usefulness of any information generated, displayed, stored, downloaded, or suggested by this application.
 
-This application does not provide medical advice, allergy advice, nutritional advice, legal advice, or official food safety conclusions. It must not be used as a replacement for consultation with a doctor, nutritionist, allergist, pharmacist, food safety expert, lawyer, or any other qualified specialist.
+The information provided by this application is strictly informational and educational. It must not be used as the sole or primary basis for medical decisions, allergy-related decisions, dietary restrictions, food consumption decisions, health conclusions, product safety conclusions, official complaints, legal claims, reports against manufacturers, disputes with sellers, insurance claims, regulatory submissions, or any other formal, legal, medical, commercial, or administrative action.
 
-The detected ingredients, warnings, and recommendations do not prove that a product is dangerous, unsafe, illegal, unhealthy, or unsuitable for every person. Some ingredients may be legally allowed and safe in permitted amounts, but may still be important for people with allergies, intolerances, medical conditions, or specific dietary restrictions.
+This application does not provide medical advice, allergy advice, nutritional advice, legal advice, consumer protection advice, product safety certification, or official interpretation of food labels. Users must consult a qualified doctor, allergist, nutritionist, pharmacist, food safety specialist, lawyer, or other competent professional before making any decision that may affect health, safety, legal rights, financial interests, or official actions.
 
-The information provided by this application must not be used as the sole basis for health decisions, allergy-related decisions, dietary restrictions, medical conclusions, product safety conclusions, official complaints, legal claims, reports against manufacturers, or any other formal actions.
+The detected ingredients, warnings, descriptions, and recommendations do not prove that any product is dangerous, unsafe, illegal, unhealthy, misleading, defective, incorrectly labeled, unsuitable for consumption, or harmful to any specific person. Some ingredients may be legally permitted and safe in regulated amounts, while still being relevant for people with allergies, intolerances, medical conditions, dietary restrictions, or personal preferences.
 
-The author is not responsible for incorrect use of the application, incorrect interpretation of the results, technical errors, OCR recognition mistakes, incomplete analysis, wrong conclusions, or any direct or indirect consequences caused by decisions made based on the information provided by the application.
+The author accepts no responsibility or liability for any direct, indirect, accidental, incidental, consequential, material, immaterial, medical, nutritional, legal, financial, emotional, reputational, academic, or other damage resulting from the use, misuse, inability to use, interpretation, misinterpretation, copying, modification, distribution, storage, or reliance on this application or any information produced by it.
 
-Users are fully responsible for verifying all information with the original product label, official product documentation, qualified specialists, and applicable legal or regulatory sources before making any decision.
+The user is fully and exclusively responsible for verifying all information with the original product label, official product documentation, manufacturer information, qualified specialists, and applicable legal or regulatory sources before making any decision. If there is any doubt, the information generated by this application must be considered unreliable until independently verified.
 
-Always read the original product label carefully before consuming any food. If you have allergies, food intolerances, medical conditions, dietary restrictions, or any doubts about a product, consult a qualified specialist before consuming it or making any decision based on the analysis.
+All intellectual property rights related to this application belong exclusively to the author, unless otherwise stated. This includes, but is not limited to, the source code, logic, structure, databases, text content, visual presentation, project concept, reports, documentation, and educational materials.
 
-All source code, structure, logic, design decisions, text content, and project materials are the exclusive intellectual property of the author, unless otherwise stated. Any unauthorized copying, modification, storage, publication, distribution, sublicensing, commercial use, reverse engineering, or use of this application or its parts without the author’s explicit permission is strictly prohibited.
+Any unauthorized copying, reproduction, modification, storage, publication, distribution, sublicensing, resale, commercial use, public demonstration, reverse engineering, extraction, adaptation, translation, redistribution, uploading, sharing, or use of this application or any part of it without the author’s explicit prior permission is strictly prohibited.
 
-Unauthorized use of this project may result in civil, administrative, and/or criminal liability under applicable law, including, where applicable, Article 172a of the Bulgarian Criminal Code concerning unlawful use of copyright-protected works without the consent of the rights holder.
+Any unauthorized use, distribution, copying, modification, storage, publication, or exploitation of this project may result in civil, administrative, and/or criminal liability under applicable law, including copyright and intellectual property legislation of the Republic of Bulgaria, the European Union, and other applicable jurisdictions.
 
-By using this application, you confirm that you have read, understood, and accepted these Terms and Conditions. You also understand that the results are generated automatically, may not be fully accurate, and must be independently verified before being used in any practical, medical, legal, nutritional, or official context.
+By continuing to use this application, you confirm that you have read, understood, and accepted these Terms and Conditions. You also confirm that you understand that the application may be inaccurate, incomplete, unclear, non-objective, or technically wrong, and that you agree not to use its results as official, medical, legal, allergy-related, nutritional, regulatory, or product safety evidence.
+
+If you do not fully accept these Terms and Conditions, you must immediately stop using this application.
             </div>
             """,
             unsafe_allow_html=True
