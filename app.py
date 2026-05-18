@@ -196,7 +196,7 @@ def show_terms_popup():
                 line-height: 1.55;
             ">
             
-            # Disclaimer
+             Disclaimer
 
             This application is created for educational and demonstration purposes only.
 
