@@ -77,7 +77,56 @@ KEYWORDS_DATA = {
     "palm oil": ("Palm Oil", "High in saturated fats, which can negatively impact cardiovascular health."),
     "трансмазнини": ("Trans Fats", "Strongly associated with an increased risk of heart disease."),
     "trans fat": ("Trans Fats", "Strongly associated with an increased risk of heart disease."),
-    "царевичен сироп": ("High Fructose Corn Syrup", "Highly processed sweetener linked to obesity.")
+    "царевичен сироп": ("High Fructose Corn Syrup", "Highly processed sweetener linked to obesity."),
+        # Allergens and important food components
+    "глутен": ("Gluten", "Common allergen. Important for people with gluten intolerance or celiac disease."),
+    "gluten": ("Gluten", "Common allergen. Important for people with gluten intolerance or celiac disease."),
+    "пшеница": ("Wheat", "Contains gluten and may be unsafe for people with wheat allergy or gluten intolerance."),
+    "пшенично": ("Wheat", "Contains gluten and may be unsafe for people with wheat allergy or gluten intolerance."),
+    "wheat": ("Wheat", "Contains gluten and may be unsafe for people with wheat allergy or gluten intolerance."),
+    "whole grain flour": ("Wheat / Gluten", "May contain gluten and should be checked by people with gluten intolerance."),
+    "refined flour": ("Wheat / Gluten", "May contain gluten and should be checked by people with gluten intolerance."),
+
+    "соя": ("Soy", "Common allergen. Important for people with soy allergy or intolerance."),
+    "соев": ("Soy", "Common allergen. Important for people with soy allergy or intolerance."),
+    "соев лецитин": ("Soy Lecithin", "Soy-derived ingredient. Important for people with soy allergy."),
+    "soy": ("Soy", "Common allergen. Important for people with soy allergy or intolerance."),
+    "soy lecithin": ("Soy Lecithin", "Soy-derived ingredient. Important for people with soy allergy."),
+
+    "мляко": ("Milk", "Common allergen. May be unsuitable for people with milk allergy or lactose intolerance."),
+    "milk": ("Milk", "Common allergen. May be unsuitable for people with milk allergy or lactose intolerance."),
+    "сухо мляко": ("Milk Powder", "Milk-derived ingredient. Important for people with milk allergy or lactose intolerance."),
+    "milk powder": ("Milk Powder", "Milk-derived ingredient. Important for people with milk allergy or lactose intolerance."),
+    "суроватка": ("Whey", "Milk-derived ingredient. May be unsuitable for people with milk allergy."),
+    "whey": ("Whey", "Milk-derived ingredient. May be unsuitable for people with milk allergy."),
+
+    "яйца": ("Eggs", "Common allergen. Important for people with egg allergy."),
+    "яйчен": ("Eggs", "Common allergen. Important for people with egg allergy."),
+    "egg": ("Eggs", "Common allergen. Important for people with egg allergy."),
+    "eggs": ("Eggs", "Common allergen. Important for people with egg allergy."),
+
+    "ядки": ("Nuts", "Common allergen. May cause serious allergic reactions in sensitive people."),
+    "nuts": ("Nuts", "Common allergen. May cause serious allergic reactions in sensitive people."),
+    "фъстъци": ("Peanuts", "Common allergen. May cause serious allergic reactions in sensitive people."),
+    "peanuts": ("Peanuts", "Common allergen. May cause serious allergic reactions in sensitive people."),
+    "бадеми": ("Almonds", "Tree nut allergen. Important for people with nut allergy."),
+    "almonds": ("Almonds", "Tree nut allergen. Important for people with nut allergy."),
+    "лешници": ("Hazelnuts", "Tree nut allergen. Important for people with nut allergy."),
+    "hazelnuts": ("Hazelnuts", "Tree nut allergen. Important for people with nut allergy."),
+
+    "сусам": ("Sesame", "Common allergen. Important for people with sesame allergy."),
+    "sesame": ("Sesame", "Common allergen. Important for people with sesame allergy."),
+
+    "горчица": ("Mustard", "Common allergen. Important for people with mustard allergy."),
+    "mustard": ("Mustard", "Common allergen. Important for people with mustard allergy."),
+
+    "риба": ("Fish", "Common allergen. Important for people with fish allergy."),
+    "fish": ("Fish", "Common allergen. Important for people with fish allergy."),
+    "ракообразни": ("Crustaceans", "Common allergen. Important for people with seafood allergy."),
+    "crustaceans": ("Crustaceans", "Common allergen. Important for people with seafood allergy."),
+
+    "сулфити": ("Sulfites", "May trigger allergic reactions or asthma symptoms in sensitive people."),
+    "sulfites": ("Sulfites", "May trigger allergic reactions or asthma symptoms in sensitive people."),
 }
 
 HEALTHY_ALTERNATIVES = [
