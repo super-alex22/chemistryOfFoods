@@ -82,9 +82,8 @@ HEALTHY_ALTERNATIVES = [
 def get_ocr_reader():
     # Explicitly configure gpu=False for CPU cloud setup
     return easyocr.Reader(['bg', 'en'], gpu=False)
-
 def preprocess_ocr_text(raw_text):
-    text = raw_text.replace("^", "л").replace("0", "о")
+    text = raw_text.replace("^", "л")
     text = text.replace("а(корбинова", "аскорбинова")
     text = text.replace("кез", "без")
     return text
@@ -119,7 +118,6 @@ def scan_for_e_numbers(text):
         if re.search(re.escape(kw), padded_text, re.IGNORECASE):
             name, desc = E_ADDITIVES[digits]
             found[digits] = (name, f"{desc} *(Detected via hidden chemical name)*")
-            break
                 
     return found
 
