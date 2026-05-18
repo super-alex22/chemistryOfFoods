@@ -198,28 +198,25 @@ def show_terms_popup():
             
             ## Disclaimer
 
-            This application is created for educational purposes only.
+            This application is created for educational and demonstration purposes only.
 
-            AI Food Label Analyzer uses OCR text recognition and a predefined list of
-            ingredients, E-numbers, chemical names, and keywords. The analysis may contain
-            mistakes if the photo is unclear, incomplete, blurry, dark, or incorrectly
-            recognized by the OCR model.
+AI Food Label Analyzer uses OCR text recognition and a predefined list of ingredients, E-numbers, chemical names, and keywords. The analysis is generated automatically and may contain mistakes, especially if the photo is unclear, incomplete, blurry, dark, cropped, distorted, or incorrectly recognized by the OCR model.
 
-            This application does not provide medical advice. It should not be used as a
-            replacement for professional medical, nutritional, or allergy-related
-            consultation.
+This application is not a fully certified medical, nutritional, legal, or food safety tool. It is a school project and should be treated as an experimental educational application. The results are informative only and must not be considered professional advice.
 
-            The detected ingredients and warnings are informative only. They do not prove
-            that a product is dangerous for every person. Some ingredients may be safe in
-            allowed amounts, but may still be important for people with allergies,
-            intolerances, or specific health conditions.
+This application does not provide medical advice. It should not be used as a replacement for consultation with a doctor, nutritionist, allergist, pharmacist, food safety expert, or any other qualified specialist.
 
-            Always read the original product label carefully before consuming any food.
-            If you have allergies, food intolerances, medical conditions, or dietary
-            restrictions, consult a qualified specialist.
+The detected ingredients, warnings, and recommendations do not prove that a product is dangerous for every person. Some ingredients may be legally allowed and safe in permitted amounts, but may still be important for people with allergies, intolerances, medical conditions, or specific dietary restrictions.
 
-            By using this application, you understand that the results are generated
-            automatically and may not be fully accurate.
+The author is not responsible for incorrect use of the application, incorrect interpretation of the results, technical errors, OCR recognition mistakes, incomplete analysis, or any consequences caused by decisions made based on the information provided by the application.
+
+Always read the original product label carefully before consuming any food. If you have allergies, food intolerances, medical conditions, or dietary restrictions, consult a qualified specialist before making any decision.
+
+All source code, structure, logic, design decisions, text content, and project materials are the exclusive intellectual property of the author, unless otherwise stated. Any unauthorized copying, modification, storage, publication, distribution, sublicensing, commercial use, reverse engineering, or use of this application or its parts without the author’s explicit permission is strictly prohibited.
+
+Unauthorized use of this project may result in civil, administrative, and/or criminal liability under applicable law, including, where applicable, Article 172a of the Bulgarian Criminal Code concerning unlawful use of copyright-protected works without the consent of the rights holder.
+
+By using this application, you confirm that you have read, understood, and accepted these Terms and Conditions. You also understand that the results are generated automatically, may not be fully accurate, and must be verified with the original product label and, when necessary, with a qualified specialist.
 
             </div>
             """,
