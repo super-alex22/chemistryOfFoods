@@ -204,20 +204,25 @@ AI Food Label Analyzer uses OCR text recognition and a predefined list of ingred
 
 This application is not a fully certified medical, nutritional, legal, or food safety tool. It is a school project and should be treated as an experimental educational application. The results are informative only and must not be considered professional advice.
 
-This application does not provide medical advice. It should not be used as a replacement for consultation with a doctor, nutritionist, allergist, pharmacist, food safety expert, or any other qualified specialist.
+The author does not guarantee the accuracy, clarity, completeness, truthfulness, objectivity, reliability, or relevance of any information generated or displayed by this application. The information may be incomplete, outdated, incorrectly interpreted, or technically inaccurate.
 
-The detected ingredients, warnings, and recommendations do not prove that a product is dangerous for every person. Some ingredients may be legally allowed and safe in permitted amounts, but may still be important for people with allergies, intolerances, medical conditions, or specific dietary restrictions.
+This application does not provide medical advice, allergy advice, nutritional advice, legal advice, or official food safety conclusions. It must not be used as a replacement for consultation with a doctor, nutritionist, allergist, pharmacist, food safety expert, lawyer, or any other qualified specialist.
 
-The author is not responsible for incorrect use of the application, incorrect interpretation of the results, technical errors, OCR recognition mistakes, incomplete analysis, or any consequences caused by decisions made based on the information provided by the application.
+The detected ingredients, warnings, and recommendations do not prove that a product is dangerous, unsafe, illegal, unhealthy, or unsuitable for every person. Some ingredients may be legally allowed and safe in permitted amounts, but may still be important for people with allergies, intolerances, medical conditions, or specific dietary restrictions.
 
-Always read the original product label carefully before consuming any food. If you have allergies, food intolerances, medical conditions, or dietary restrictions, consult a qualified specialist before making any decision.
+The information provided by this application must not be used as the sole basis for health decisions, allergy-related decisions, dietary restrictions, medical conclusions, product safety conclusions, official complaints, legal claims, reports against manufacturers, or any other formal actions.
+
+The author is not responsible for incorrect use of the application, incorrect interpretation of the results, technical errors, OCR recognition mistakes, incomplete analysis, wrong conclusions, or any direct or indirect consequences caused by decisions made based on the information provided by the application.
+
+Users are fully responsible for verifying all information with the original product label, official product documentation, qualified specialists, and applicable legal or regulatory sources before making any decision.
+
+Always read the original product label carefully before consuming any food. If you have allergies, food intolerances, medical conditions, dietary restrictions, or any doubts about a product, consult a qualified specialist before consuming it or making any decision based on the analysis.
 
 All source code, structure, logic, design decisions, text content, and project materials are the exclusive intellectual property of the author, unless otherwise stated. Any unauthorized copying, modification, storage, publication, distribution, sublicensing, commercial use, reverse engineering, or use of this application or its parts without the author’s explicit permission is strictly prohibited.
 
 Unauthorized use of this project may result in civil, administrative, and/or criminal liability under applicable law, including, where applicable, Article 172a of the Bulgarian Criminal Code concerning unlawful use of copyright-protected works without the consent of the rights holder.
 
-By using this application, you confirm that you have read, understood, and accepted these Terms and Conditions. You also understand that the results are generated automatically, may not be fully accurate, and must be verified with the original product label and, when necessary, with a qualified specialist.
-
+By using this application, you confirm that you have read, understood, and accepted these Terms and Conditions. You also understand that the results are generated automatically, may not be fully accurate, and must be independently verified before being used in any practical, medical, legal, nutritional, or official context.
             </div>
             """,
             unsafe_allow_html=True
