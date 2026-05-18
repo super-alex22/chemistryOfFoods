@@ -184,19 +184,82 @@ def generate_report_content(text, e_codes, keywords):
 # Streamlit Application Layout
 # -----------------------------------------------------------------------------
 
+def show_terms_popup():
+    @st.dialog("Terms and Conditions")
+    def terms_dialog():
+        st.markdown(
+            """
+            <div style="
+                max-height: 420px;
+                overflow-y: auto;
+                padding-right: 10px;
+                line-height: 1.55;
+            ">
+            
+            ## Disclaimer
+
+            This application is created for educational purposes only.
+
+            AI Food Label Analyzer uses OCR text recognition and a predefined list of
+            ingredients, E-numbers, chemical names, and keywords. The analysis may contain
+            mistakes if the photo is unclear, incomplete, blurry, dark, or incorrectly
+            recognized by the OCR model.
+
+            This application does not provide medical advice. It should not be used as a
+            replacement for professional medical, nutritional, or allergy-related
+            consultation.
+
+            The detected ingredients and warnings are informative only. They do not prove
+            that a product is dangerous for every person. Some ingredients may be safe in
+            allowed amounts, but may still be important for people with allergies,
+            intolerances, or specific health conditions.
+
+            Always read the original product label carefully before consuming any food.
+            If you have allergies, food intolerances, medical conditions, or dietary
+            restrictions, consult a qualified specialist.
+
+            By using this application, you understand that the results are generated
+            automatically and may not be fully accurate.
+
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        accepted = st.checkbox("I have read and accept the Terms and Conditions.")
+
+        if st.button("Continue", type="primary", disabled=not accepted):
+            st.session_state.terms_accepted = True
+            st.rerun()
+
+    terms_dialog()
+
 def main():
     st.set_page_config(page_title="AI Food Label Analyzer", layout="centered")
-    
+
+    st.markdown(
+        """
+        <style>
+        div[data-testid="stModal"] {
+            backdrop-filter: blur(6px);
+            background-color: rgba(0, 0, 0, 0.35);
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    if "terms_accepted" not in st.session_state:
+        st.session_state.terms_accepted = False
+
     st.title("🍏 AI Food Label Analyzer")
     st.write("Extract text from food labels using EasyOCR and immediately detect hidden harmful ingredients, additives, and allergens.")
     st.markdown("---")
-    
-    # -------------------------------------------------------------------------
-    # CRITICAL CLOUD OPTIMIZATION:
-    # Initialize and cache the OCR reader upfront when the web page boots up.
-    # This securely downloads the heavy models upfront, preventing memory 
-    # spikes and status check timeouts during actual button execution.
-    # -------------------------------------------------------------------------
+
+    if not st.session_state.terms_accepted:
+        show_terms_popup()
+        st.stop()
+
     with st.spinner("⏳ Pre-loading AI models into memory (First load takes 1-2 minutes)..."):
         reader = get_ocr_reader()
         
