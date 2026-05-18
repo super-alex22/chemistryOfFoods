@@ -389,69 +389,67 @@ def main():
         show_terms_popup()
         st.stop()
 
-    with st.spinner("⏳ Pre-loading AI models into memory (First load takes 1-2 minutes)..."):
-        reader = get_ocr_reader()
-        
     tab_file, tab_cam = st.tabs(["📂 Upload File", "📷 Take Photo"])
     raw_image = None
-    
     with tab_file:
         file_buffer = st.file_uploader("Upload a label image (JPG, PNG):", type=["jpg", "jpeg", "png"])
         if file_buffer:
             raw_image = Image.open(file_buffer)
             st.image(raw_image, caption="Uploaded Label Image", width="stretch")
-            
+
     with tab_cam:
         cam_buffer = st.camera_input("Take a clear picture of the ingredient list:")
         if cam_buffer:
             raw_image = Image.open(cam_buffer)
             st.image(raw_image, caption="Captured Label Image", width="stretch")
-            
+
     if raw_image and st.button("🔍 Analyze Label", type="primary"):
-        
+
         with st.status("Processing label data...", expanded=True) as status:
-            
+
             st.write("📷 Loading image data into memory...")
             img_array = np.array(raw_image.convert("RGB"))
-            
+
+            st.write("⏳ Loading OCR model...")
+            reader = get_ocr_reader()
+
             st.write("⏳ Extracting raw text via EasyOCR neural network...")
-            # Reader is already safely loaded upfront, making this step fast and stable
             text_segments = reader.readtext(img_array, detail=0)
             full_extracted_text = " ".join(text_segments)
-            
+
             st.write("⚙️ Preprocessing and filtering OCR noise...")
-            
+
             st.write("🔬 Scanning for direct E-codes and hidden chemical names...")
             detected_e = scan_for_e_numbers(full_extracted_text)
-            
+
             st.write("⚠️ Cross-referencing hazardous additives and allergen keywords...")
             detected_kw = scan_for_keywords(full_extracted_text)
-            
+
             status.update(label="Analysis Complete!", state="complete", expanded=False)
-            
+
         st.subheader("📜 Extracted Text from Label:")
         st.info(full_extracted_text if full_extracted_text.strip() else "No readable text detected.")
-        
+
         st.subheader("⚠️ Detected Harmful Ingredients (E-codes):")
         if detected_e:
             for _, (name, desc) in detected_e.items():
                 st.error(f"**{name}**\n\n{desc}")
         else:
             st.success("✅ No dangerous E-numbers detected.")
-            
+
         st.subheader("⚠️ Detected Ingredients (by Keyword):")
         if detected_kw:
             for kw_name, kw_desc in detected_kw.items():
                 st.warning(f"**{kw_name}** — {kw_desc}")
         else:
             st.success("✅ No problematic ingredients detected by keywords.")
-            
+
         st.subheader("💡 Alternatives to Processed Foods:")
         for alt_text in HEALTHY_ALTERNATIVES:
             st.markdown(alt_text)
-            
+
         st.markdown("---")
-        
+
         report_data = generate_report_content(full_extracted_text, detected_e, detected_kw)
         st.download_button(
             label="📥 Download Report as .txt",
@@ -459,6 +457,5 @@ def main():
             file_name="food_label_report.txt",
             mime="text/plain"
         )
-
 if __name__ == "__main__":
     main()
