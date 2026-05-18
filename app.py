@@ -25,6 +25,7 @@ E_ADDITIVES = {
     "250": ("E250: Sodium Nitrite", "Preservative commonly used in processed meats. Linked to increased cancer risks."),
     "262": ("E262: Sodium Acetate", "Acidity regulator. Excessive amounts may irritate the stomach."),
     "280": ("E280: Propionic Acid", "Preservative primarily used in bakery products."),
+    "281": ("E281: Sodium Propionate", "Preservative used in bakery products. Excessive intake may irritate the stomach in sensitive people."),
     "300": ("E300: Ascorbic Acid", "Vitamin C. Safe, though extremely large doses may irritate the stomach."),
     "320": ("E320: Butylated Hydroxyanisole (BHA)", "Antioxidant. Considered a possible human carcinogen; best avoided."),
     "330": ("E330: Citric Acid", "Acidity regulator. Frequent consumption may damage tooth enamel."),
@@ -42,16 +43,27 @@ E_ADDITIVES = {
 HIDDEN_E_CODES = {
     "аскорбинова киселина": "300",
     "ascorbic acid": "300",
+
     "натриев глутамат": "621",
     "monosodium glutamate": "621",
+
     "натриев нитрит": "250",
     "sodium nitrite": "250",
+
     "карагенан": "407",
     "carrageenan": "407",
+
     "лимонена киселина": "330",
     "citric acid": "330",
+
     "дифосфат": "450",
-    "diphosphate": "450"
+    "diphosphate": "450",
+
+    "калиев сорбат": "202",
+    "potassium sorbate": "202",
+
+    "натриев пропионат": "281",
+    "sodium propionate": "281"
 }
 
 KEYWORDS_DATA = {
