@@ -27,6 +27,7 @@ E_ADDITIVES = {
     "280": ("E280: Propionic Acid", "Preservative primarily used in bakery products."),
     "281": ("E281: Sodium Propionate", "Preservative used in bakery products. Excessive intake may irritate the stomach in sensitive people."),
     "300": ("E300: Ascorbic Acid", "Vitamin C. Safe, though extremely large doses may irritate the stomach."),
+    "301": ("E301: Sodium Ascorbate", "Antioxidant. Generally considered safe, but still an added food additive."),
     "320": ("E320: Butylated Hydroxyanisole (BHA)", "Antioxidant. Considered a possible human carcinogen; best avoided."),
     "330": ("E330: Citric Acid", "Acidity regulator. Frequent consumption may damage tooth enamel."),
     "407": ("E407: Carrageenan", "Thickener. Associated with intestinal inflammation."),
@@ -56,14 +57,23 @@ HIDDEN_E_CODES = {
     "лимонена киселина": "330",
     "citric acid": "330",
 
-    "дифосфат": "450",
-    "diphosphate": "450",
-
     "калиев сорбат": "202",
     "potassium sorbate": "202",
 
     "натриев пропионат": "281",
-    "sodium propionate": "281"
+    "sodium propionate": "281",
+    "нитритна сол": "250",
+    "нитрит": "250",
+    "nitrite": "250",
+
+    "дифосфат": "450",
+    "дифосфати": "450",
+    "diphosphate": "450",
+    "diphosphates": "450",
+
+    "аскорбат": "301",
+    "натриев аскорбат": "301",
+    "sodium ascorbate": "301",
 }
 
 KEYWORDS_DATA = {
@@ -143,20 +153,105 @@ HEALTHY_ALTERNATIVES = [
 def get_ocr_reader():
     # Explicitly configure gpu=False for CPU cloud setup
     return easyocr.Reader(['bg', 'en'], gpu=False)
+def preprocess_image_for_ocr(image):
+    image = image.convert("RGB")
+
+    width, height = image.size
+    image = image.resize((width * 2, height * 2))
+
+    import PIL.ImageOps as ImageOps
+    import PIL.ImageEnhance as ImageEnhance
+    import PIL.ImageFilter as ImageFilter
+
+    image = ImageOps.autocontrast(image)
+    image = ImageEnhance.Contrast(image).enhance(1.8)
+    image = ImageEnhance.Sharpness(image).enhance(2.0)
+    image = image.filter(ImageFilter.SHARPEN)
+
+    return image
 def preprocess_ocr_text(raw_text):
-    text = raw_text.replace("^", "л")
-    text = text.replace("а(корбинова", "аскорбинова")
-    text = text.replace("кез", "без")
+    text = raw_text.lower()
+
+    replacements = {
+        "^": "л",
+        "а(корбинова": "аскорбинова",
+        "кез": "без",
+
+        # Common Bulgarian OCR mistakes from food labels
+        "хранмтелни": "хранителни",
+        "стойности": "стойности",
+        "нерпйна": "енергийна",
+        "отсвинскомесо": "от свинско месо",
+        "свинсюо": "свинско",
+        "месо": "месо",
+
+        # Nitrite / sodium nitrite
+        "нитритна": "нитритна",
+        "нитpитна": "нитритна",
+        "нuтритна": "нитритна",
+        "нитритна сол": "нитритна сол",
+        "матриев": "натриев",
+        "maтриев": "натриев",
+        "maтpиев": "натриев",
+        "маtриев": "натриев",
+        "натpиев": "натриев",
+        "натриев #ифи": "натриев нитрит",
+        "натриев ифи": "натриев нитрит",
+        "натриев нити": "натриев нитрит",
+        "натриев нитри": "натриев нитрит",
+
+        # Diphosphates
+        "дюфосфати": "дифосфати",
+        "дюфосфат": "дифосфат",
+        "диюфосфати": "дифосфати",
+        "дuфосфати": "дифосфати",
+        "дlфосфати": "дифосфати",
+
+        # Ascorbate
+        "асюорбат": "аскорбат",
+        "асюор6ат": "аскорбат",
+        "асюорбат": "аскорбат",
+        "аchoорбат": "аскорбат",
+        "аcюорбат": "аскорбат",
+        "aскорбат": "аскорбат",
+
+        # Gluten / lactose
+        "лутен": "глутен",
+        "глyтен": "глутен",
+        "глутен": "глутен",
+        "лктоза": "лактоза",
+        "илктоза": "лактоза",
+        "и лктоза": "и лактоза",
+        "без лутен": "без глутен",
+        "бе [лутен": "без глутен",
+        "бе глутен": "без глутен",
+
+        # Preservative
+        "консервант": "консервант",
+        "юонсервант": "консервант",
+        "ноисервант": "консервант",
+    }
+
+    for wrong, correct in replacements.items():
+        text = text.replace(wrong, correct)
+
     return text
 
 def has_global_negation(text, keyword_type=""):
+    lower = text.lower()
+
     if keyword_type == "preservative":
         negations = ["без изкуствени", "без консерванти", "no preservatives", "free from preservatives"]
-        if "без" in text.lower() or "free" in text.lower():
-            return True
-        for neg in negations:
-            if neg in text.lower():
-                return True
+        return any(neg in lower for neg in negations)
+
+    if keyword_type == "gluten":
+        negations = ["без глутен", "no gluten", "gluten free", "gluten-free"]
+        return any(neg in lower for neg in negations)
+
+    if keyword_type == "lactose":
+        negations = ["без лактоза", "no lactose", "lactose free", "lactose-free"]
+        return any(neg in lower for neg in negations)
+
     return False
 
 def scan_for_e_numbers(text):
@@ -185,15 +280,21 @@ def scan_for_e_numbers(text):
 def scan_for_keywords(text):
     found = {}
     cleaned_text = preprocess_ocr_text(text).lower()
-    
+
     for kw, (name, desc) in KEYWORDS_DATA.items():
         if kw in cleaned_text:
             if name == "Preservatives" and has_global_negation(cleaned_text, keyword_type="preservative"):
-                continue  
-            found[name] = desc
-            
-    return found
+                continue
 
+            if name in ["Gluten", "Wheat", "Wheat / Gluten"] and has_global_negation(cleaned_text, keyword_type="gluten"):
+                continue
+
+            if name == "Lactose" and has_global_negation(cleaned_text, keyword_type="lactose"):
+                continue
+
+            found[name] = desc
+
+    return found
 def generate_report_content(text, e_codes, keywords):
     lines = [
         "=== AI FOOD LABEL ANALYZER REPORT ===",
@@ -407,14 +508,24 @@ def main():
 
         with st.status("Processing label data...", expanded=True) as status:
 
-            st.write("📷 Loading image data into memory...")
-            img_array = np.array(raw_image.convert("RGB"))
+            st.write("📷 Loading and improving image data...")
+            processed_image = preprocess_image_for_ocr(raw_image)
+            img_array = np.array(processed_image)
 
             st.write("⏳ Loading OCR model...")
             reader = get_ocr_reader()
 
             st.write("⏳ Extracting raw text via EasyOCR neural network...")
-            text_segments = reader.readtext(img_array, detail=0)
+            text_segments = reader.readtext(
+                img_array,
+                detail=0,
+                paragraph=True,
+                decoder="beamsearch",
+                contrast_ths=0.05,
+                adjust_contrast=0.7,
+                text_threshold=0.5,
+                low_text=0.3
+            )
             full_extracted_text = " ".join(text_segments)
 
             st.write("⚙️ Preprocessing and filtering OCR noise...")
