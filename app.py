@@ -151,8 +151,12 @@ HEALTHY_ALTERNATIVES = [
 
 @st.cache_resource
 def get_ocr_reader():
-    # Explicitly configure gpu=False for CPU cloud setup
-    return easyocr.Reader(['bg', 'en'], gpu=False)
+    return easyocr.Reader(
+        ['bg', 'en'],
+        gpu=False,
+        model_storage_directory="easyocr_models",
+        download_enabled=False
+    )
 def preprocess_image_for_ocr(image):
     image = image.convert("RGB")
 
