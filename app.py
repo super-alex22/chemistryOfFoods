@@ -2,6 +2,7 @@ import re
 import streamlit as st
 import easyocr
 import numpy as np
+import time
 from PIL import Image
 
 # -----------------------------------------------------------------------------
