@@ -475,7 +475,7 @@ def show_terms_popup():
             # Clear placeholder and render navigation buttons in columns
             timer_placeholder.empty()
 
-            col_back, col_continue = st.columns()
+            col_back, col_continue = st.columns(2)
             
             with col_back:
                 if st.button("⬅️ Back", use_container_width=True):
