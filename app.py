@@ -424,10 +424,11 @@ def show_terms_popup():
                 st.rerun()
 
         # --- STEP 2: The Final Warning Box with Countdown ---
+        # --- STEP 2: The Final Warning Box with Countdown ---
         elif st.session_state.terms_step == 2:
             st.write("### 🚨 Critical Verification Check")
             
-            # Custom container styling: Pale red background (#FFEBEE), dark red border (#C62828)
+            # Custom container styling: Updated with criminal liability warning
             warning_box_html = """
             <div style="
                 background-color: #FFEBEE; 
@@ -445,8 +446,13 @@ def show_terms_popup():
                 By clicking the button below, you officially declare that you have 
                 <strong>fully read, completely understood, and irrevocably accepted</strong> 
                 the provided Disclaimer. You acknowledge the technical errors of OCR 
-                and confirm you hold total legal and mental capacity. You accept full 
-                personal responsibility for using this experimental educational software.
+                and confirm you hold total legal and mental capacity.<br><br>
+                <strong>CRIMINAL LIABILITY NOTICE:</strong> Providing false statements, 
+                manipulated images, or misrepresenting your age/legal capacity to bypass 
+                system restrictions is strictly prohibited. Under applicable laws (including 
+                the Criminal Code of the Republic of Bulgaria), intentionally submitting false 
+                declarations or engaging in fraudulent misrepresentation may lead to severe civil, 
+                administrative, and/or <strong>criminal prosecution</strong>.
             </div>
             """
             st.markdown(warning_box_html, unsafe_allow_html=True)
@@ -466,16 +472,23 @@ def show_terms_popup():
                 st.session_state.timer_done = True
                 st.rerun()
 
-            # Clear placeholder and activate the final button
+            # Clear placeholder and render navigation buttons in columns
             timer_placeholder.empty()
 
-            if st.button("Continue", type="primary", key="final_continue_btn"):
-                st.session_state.terms_accepted = True
-                # Clean up steps just in case of future sessions
-                del st.session_state.terms_step
-                del st.session_state.timer_done
-                st.rerun()
-
+            col_back, col_continue = st.columns()
+            
+            with col_back:
+                if st.button("⬅️ Back", use_container_width=True):
+                    st.session_state.terms_step = 1
+                    st.session_state.timer_done = False # Reset timer so it ticks again if they come back
+                    st.rerun()
+                    
+            with col_continue:
+                if st.button("Continue", type="primary", key="final_continue_btn", use_container_width=True):
+                    st.session_state.terms_accepted = True
+                    del st.session_state.terms_step
+                    del st.session_state.timer_done
+                    st.rerun()
     terms_dialog()
 def main():
     st.set_page_config(page_title="AI Food Label Analyzer", layout="centered")
