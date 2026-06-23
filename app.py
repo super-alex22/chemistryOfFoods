@@ -142,7 +142,7 @@ def get_ocr_reader():
         ['bg', 'en'],
         gpu=False,
         model_storage_directory="easyocr_models",
-        download_enabled=False
+        download_enabled=True
     )
 
 def preprocess_image_for_ocr(image):
