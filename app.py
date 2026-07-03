@@ -396,7 +396,7 @@ Any unauthorized attempts to bypass this access control, including but not limit
     readme_agreement = st.checkbox(
         "I officially certify, warrant, and represent that I am at least 18 years of age, "
         "possess full legal capacity, and that I have carefully, thoroughly, fully READ, completely UNDERSTOOD, "
-        "and  unconditionally unequivocally, indivisibly, conclusively, unreservedly, permanently, and irrevocably ACCEPTED every clause, restriction, liability waiver, and "
+        "and  unconditionally, unequivocally, indivisibly, conclusively, unreservedly, permanently, and irrevocably ACCEPTED every clause, restriction, liability waiver, and "
         "jurisdictional restriction contained within the official README.md document, "
         "agreeing to be contractually bound by them.",
         key="readme_agreement"
