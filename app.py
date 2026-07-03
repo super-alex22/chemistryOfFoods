@@ -390,7 +390,7 @@ Any unauthorized attempts to bypass this access control, including but not limit
     to read and comprehend the comprehensive terms, absolute waivers of liability, and 
     jurisdictional restrictions stipulated in the official repository documentation.
     """)
-    st.markdown("[👉 Click here to read the mandatory README.md Terms and Conditions](https://github.com/super-alex22/ChemistryOfFoodss/blob/main/Readme.md)")
+    st.markdown("[👉 Click here to read the mandatory README.md Terms and Conditions](https://github.com/super-alex22/chemistryOfFoods/blob/main/Readme.md)")
     
     # 2. Maximum Express Warranties Checkbox ("Read, Understood, Accepted")
     readme_agreement = st.checkbox(
