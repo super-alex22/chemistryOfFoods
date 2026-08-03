@@ -621,8 +621,8 @@ Furthermore, any and all information, data, text, or visual elements generated, 
 All generated outputs and presented data are completely unpredictable, may contain total nonsense, and must be treated strictly as unverified algorithmic artifacts. The author does not guarantee, under any circumstances, the accuracy, completeness, clarity, truthfulness, objectivity, reliability, legality, relevance, timeliness, medical correctness, nutritional correctness, or practical usefulness of any information generated, displayed, stored, downloaded, or suggested by this application. Any provided data is, or may be, factually inaccurate, factually incorrect, partially false, partially true, incomplete, or entirely misleading, and lacks any operational, legal, or factual validity whatsoever.
 
 🔒 **RESTRICTED ACCESS & NO-WARRANTY NOTICE:** This system is provided strictly "AS IS" and "AS AVAILABLE" without warranties of any kind, express or implied. If you do not possess an explicit authorization and direct written invitation from the author to test this system, or if you do not agree to these terms unconditionally, **YOU MUST DISCONNECT AND EXIT THIS APPLICATION IMMEDIATELY.**""")    if not st.session_state.terms_accepted:
-        show_terms_popup()
-        st.stop()
+    show_terms_popup()
+    st.stop()
 
     tab_file, tab_cam = st.tabs(["📂 Upload File", "📷 Take Photo"])
     raw_image = None
