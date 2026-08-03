@@ -611,7 +611,7 @@ def main():
     st.write("Extract text from food labels using EasyOCR and immediately detect hidden harmful ingredients, additives, and allergens.")
     st.markdown("---")
     st.error(
-    "⚠️ **CRITICAL WARNING: EXPERIMENTAL SCHOOL PROJECT ONLY** ⚠️\n\n"
+    """⚠️ **CRITICAL WARNING: EXPERIMENTAL SCHOOL PROJECT ONLY** ⚠️\n\n"
     "This application is an **experimental school project** developed strictly for educational and demonstration purposes. "
     "It is **NOT** a certified, approved, official, medical, nutritional, or food safety tool. "
     "The automated analysis and OCR text recognition contain errors, omissions, and technical limitations.\n\n"
@@ -624,7 +624,7 @@ def main():
     "Any such unauthorized use is strictly prohibited, performed entirely at the user's sole risk, and constitutes "
     "an immediate and absolute waiver of any and all civil claims, liabilities, or legal actions against the author.\n\n"
     "🔒 **RESTRICTED ACCESS NOTICE:** If you do not possess an explicit authorization and written invitation from the author "
-    "to test this system, or if you do not agree to these terms unconditionally, **YOU MUST DISCONNECT AND EXIT THIS APPLICATION IMMEDIATELY.**"
+    "to test this system, or if you do not agree to these terms unconditionally, **YOU MUST DISCONNECT AND EXIT THIS APPLICATION IMMEDIATELY.**"""
     )
     if not st.session_state.terms_accepted:
         show_terms_popup()
