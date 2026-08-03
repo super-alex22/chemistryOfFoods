@@ -622,8 +622,8 @@ All generated outputs and presented data are completely unpredictable, may conta
 
 🔒 **RESTRICTED ACCESS & NO-WARRANTY NOTICE:** This system is provided strictly "AS IS" and "AS AVAILABLE" without warranties of any kind, express or implied. If you do not possess an explicit authorization and direct written invitation from the author to test this system, or if you do not agree to these terms unconditionally, **YOU MUST DISCONNECT AND EXIT THIS APPLICATION IMMEDIATELY.**""")
     if not st.session_state.terms_accepted:
-    show_terms_popup()
-    st.stop()
+        show_terms_popup()
+        st.stop()
 
     tab_file, tab_cam = st.tabs(["📂 Upload File", "📷 Take Photo"])
     raw_image = None
