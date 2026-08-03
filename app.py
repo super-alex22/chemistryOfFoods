@@ -615,9 +615,12 @@ def main():
     "This application is an **experimental school project** developed strictly for educational and demonstration purposes. "
     "It is **NOT** a certified, approved, official, medical, nutritional, or food safety tool. "
     "The automated analysis and OCR text recognition contain errors, omissions, and technical limitations.\n\n"
-    "🛑 **IT MUST NEVER, UNDER ANY CIRCUMSTANCES, UNDER ANY GOAL, OR WITHIN ANY JURISDICTION WHATEVER, "
-    "BE USED, REPRODUCED, DISPLAYED, OR RELIED UPON FOR MAKING ANY HEALTH, MEDICAL, ALLERGY, DIETARY, "
-    "OR FOOD CONSUMPTION DECISIONS.** "
+    "🛑 **IT IS STRICTLY, ABSOLUTELY, AND CATEGORICALLY FORBIDDEN, UNDER ANY AND ALL CONCEIVABLE CIRCUMSTANCES, 
+    FOR ANY DIRECT OR INDIRECT GOAL, IN ANY FORM, BY ANY MEANS, OR WITHIN ANY JURISDICTION WORLDWIDE, TO EVER USE, 
+    REPRODUCE, DISPLAY, COPY, DISTRIBUTE, SHARE, OR RELY UPON THIS APPLICATION OR ITS OUTPUT. IT MUST NEVER, UNDER ANY CIRCUMSTANCES, 
+    IN ANY CASE WHATSOEVER, AND WITHOUT ANY EXCEPTION, BE USED, REPRODUCED, DISPLAYED, COPIED, DISTRIBUTED, SHARED, OR RELIED UPON
+    FOR MAKING ANY HEALTH, MEDICAL, CLINICAL, DIAGNOSTIC, ALLERGY, INTOLERANCE, DIETARY, NUTRITIONAL, INGREDIENT-CHECKING, MEAL-PLANNING,
+    PHARMACEUTICAL, HAZARD-DETECTION, OR ANY OTHER FOOD-RELATED CONSUMPTION, SELECTION, PURCHASING, OR EATING DECISIONS WHATSOEVER.** "
     "Any such unauthorized use is strictly prohibited, performed entirely at the user's sole risk, and constitutes "
     "an immediate and absolute waiver of any and all civil claims, liabilities, or legal actions against the author.\n\n"
     "🔒 **RESTRICTED ACCESS NOTICE:** If you do not possess an explicit authorization and written invitation from the author "
